@@ -44,13 +44,18 @@
             </section>
           </ng-template>
           <ng-template #subtitle>
-            <span class="text-sm text-gray-600">{{ pessoa.origem || 'Sem origem definida' }}</span>
+            <span class="text-sm text-gray-600">{{ pessoa.funcao || 'Sem função definida' }}</span>
           </ng-template>
           <div class="space-y-2">
             <p><strong>CPF/CNPJ:</strong> {{ pessoa.cpfCnpj }}</p>
             @if (pessoa.dataNascimento) {
               <p class="text-sm text-gray-700">
                 <strong>Data de Nascimento:</strong> {{ pessoa.dataNascimento | date: 'dd/MM/yyyy' }}
+              </p>
+            }
+            @if (pessoa.observacao) {
+              <p class="text-sm text-gray-700">
+                <strong>Observação:</strong> {{ pessoa.observacao }}
               </p>
             }
           </div>
@@ -118,15 +123,28 @@
       </div>
 
       <div class="flex flex-col space-y-2">
-        <label for="origem" class="font-semibold">Origem</label>
-        <input
-          [ngModel]="editandoPessoa?.origem"
-          name="origem"
-          id="origem"
-          type="text"
-          placeholder="Origem da pessoa..."
-          pInputText
+        <label for="funcao" class="font-semibold">Função</label>
+        <p-select
+          [ngModel]="editandoPessoa?.funcao"
+          name="funcao"
+          id="funcao"
+          [options]="funcaoOpcoes"
+          placeholder="Selecione a função..."
+          styleClass="w-full"
         />
+      </div>
+
+      <div class="flex flex-col space-y-2">
+        <label for="observacao" class="font-semibold">Observação</label>
+        <textarea
+          [ngModel]="editandoPessoa?.observacao"
+          name="observacao"
+          id="observacao"
+          rows="3"
+          placeholder="Observações sobre a pessoa..."
+          pTextarea
+          maxlength="500"
+        ></textarea>
       </div>
 
       <div class="flex justify-end gap-2 pt-4">

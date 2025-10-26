@@ -12,6 +12,8 @@ import { MessageService } from 'primeng/api';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputMaskModule } from 'primeng/inputmask';
+import { TextareaModule } from 'primeng/textarea';
+import { SelectModule } from 'primeng/select';
 import { CpfCnpjMaskDirective } from '../../../directives/cpf-cnpj-mask.directive';
 import { PessoaService } from '../../../services/pessoa.service';
 import { AlterarPessoaBody, CadastrarPessoaBody, PessoaResponse } from '../../../models/pessoa.model';
@@ -33,6 +35,8 @@ import { AlterarPessoaBody, CadastrarPessoaBody, PessoaResponse } from '../../..
     IconFieldModule,
     InputIconModule,
     InputMaskModule,
+    TextareaModule,
+    SelectModule,
     CpfCnpjMaskDirective,
   ],
   templateUrl: './pessoas-tabs.html',
@@ -55,6 +59,12 @@ export class PessoasTabsComponent {
   totalRegistros: number = 0;
 
   searchText: string = '';
+
+  funcaoOpcoes = [
+    { label: 'Cliente', value: 'Cliente' },
+    { label: 'Fornecedor', value: 'Fornecedor' },
+    { label: 'Funcionário', value: 'Funcionário' },
+  ];
 
   ngOnInit() {
     this.buscarPessoas();
@@ -85,7 +95,7 @@ export class PessoasTabsComponent {
       this.pessoasFiltradas = this.pessoas.filter(
         (p) =>
           p.nome.toLowerCase().includes(termo) ||
-          (p.origem && p.origem.toLowerCase().includes(termo)) ||
+          (p.funcao && p.funcao.toLowerCase().includes(termo)) ||
           p.cpfCnpj.includes(termo)
       );
     }
@@ -130,7 +140,9 @@ export class PessoasTabsComponent {
         nome: form.value.nome,
         cpfCnpj: cpfCnpjLimpo,
         dataNascimento: form.value.dataNascimento || null,
-        origem: form.value.origem || null,
+        origem: null,
+        funcao: form.value.funcao || null,
+        observacao: form.value.observacao || null,
       };
 
       this.pessoaService.cadastrarPessoa(novaPessoa).subscribe({
@@ -158,7 +170,9 @@ export class PessoasTabsComponent {
         nome: form.value.nome,
         cpfCnpj: cpfCnpjLimpo,
         dataNascimento: form.value.dataNascimento || null,
-        origem: form.value.origem || null,
+        origem: null,
+        funcao: form.value.funcao || null,
+        observacao: form.value.observacao || null,
       };
 
       this.pessoaService.editarPessoa(pessoaAtualizada).subscribe({

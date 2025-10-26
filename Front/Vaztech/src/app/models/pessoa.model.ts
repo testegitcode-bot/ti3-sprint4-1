@@ -13,6 +13,8 @@ export type CadastrarPessoaBody = {
   cpfCnpj: string;
   dataNascimento: Date | null;
   origem: string | null;
+  funcao: string | null;
+  observacao: string | null;
 };
 
 export type AlterarPessoaBody = {
@@ -21,4 +23,6 @@ export type AlterarPessoaBody = {
   cpfCnpj: string;
   dataNascimento: Date | null;
   origem: string | null;
+  funcao: string | null;
+  observacao: string | null;
 };
